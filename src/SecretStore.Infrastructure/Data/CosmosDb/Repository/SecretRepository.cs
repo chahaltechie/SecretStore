@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Application.Common.Interfaces;
 using Domain.Entities;
 using Infrastructure.Data.CosmosDb.Interfaces;
@@ -14,6 +16,16 @@ namespace Infrastructure.Data.CosmosDb.Repository
 
         public SecretRepository(ICosmosDbContainerFactory containerFactory) : base(containerFactory)
         {
+        }
+
+        public async Task<IEnumerable<Secret>> GetAllSecretsAsync()
+        {
+            //var results = new List<Secret>();
+            string query = @$"SELECT * FROM c ";
+
+            var results = await this.GetItemsAsync(query);
+
+            return results;
         }
     }
 }

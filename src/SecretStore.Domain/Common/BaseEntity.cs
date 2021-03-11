@@ -10,6 +10,7 @@ namespace Domain.Common
         [JsonProperty(PropertyName = "id")] public string Id { get; set; }
 
         [JsonProperty(PropertyName = "pk")] public string PartitionKey { get; } = "secret";
+        [JsonProperty(PropertyName = "un")] public string UniqueKey { get; } = DateTime.UtcNow.Ticks.ToString();
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         public DateTime? ModifiedOn { get; set; } = DateTime.UtcNow;
         public string CreatedBy { get; set; }

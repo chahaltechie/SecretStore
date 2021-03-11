@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using SecretStore.API.Configurations;
 using SecretStore.API.Installers;
 using SecretStore.API.Models;

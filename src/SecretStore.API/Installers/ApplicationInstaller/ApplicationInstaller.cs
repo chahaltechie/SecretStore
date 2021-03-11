@@ -1,14 +1,14 @@
-﻿using Infrastructure.Services.Logger;
+﻿using Application;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace SecretStore.API.Installers.InfrastructureInstallers
+namespace SecretStore.API.Installers.ApplicationInstaller
 {
-    public class LoggerInsaller : IInstaller
+    public class ApplicationInstaller : IInstaller
     {
         public void InstallService(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddLogger(configuration);
+            services.AddApplication();
         }
     }
 }

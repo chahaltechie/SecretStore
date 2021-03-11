@@ -2,19 +2,28 @@
 using Infrastructure.Data.CosmosDb.Bootstrap;
 using Infrastructure.Data.CosmosDb.Configuration;
 using Infrastructure.Data.CosmosDb.Repository;
+using Infrastructure.Services.Logger;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace SecretStore.API.Installers.InfrastructureInstallers
+namespace Infrastructure
 {
-    public class CosmosDbDependencyInstaller : IInstaller
+    public static class DependencyInjection
     {
-        public void InstallService(IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             var settings = new CosmosDbSettings();
             configuration.Bind(nameof(CosmosDbSettings),settings);
             services.AddCosmosDb(settings.EndPointUrl, settings.PrimaryKey, settings.DatabaseName, settings.Containers);
             services.AddScoped<ISecretRepository, SecretRepository>();
+            
+            //logger
+            services.AddLogger(configuration);
+            
+            //Repository
+            services.AddScoped<ISecretRepository, SecretRepository>();
+
+            return services;
         }
     }
 }
