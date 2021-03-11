@@ -1,5 +1,5 @@
-﻿using Application.Common.Models;
-using Application.Secret.Commands.CreateSecret;
+﻿using Application.Secret.Commands.CreateSecret;
+using Application.Secret.Models;
 using AutoMapper;
 
 namespace Application.Secret.MapperProfile

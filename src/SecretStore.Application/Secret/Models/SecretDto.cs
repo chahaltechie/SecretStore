@@ -2,7 +2,7 @@
 using Domain.Entities;
 using Domain.Enums;
 
-namespace Application.Common.Models
+namespace Application.Secret.Models
 {
     public class SecretDto
     {
