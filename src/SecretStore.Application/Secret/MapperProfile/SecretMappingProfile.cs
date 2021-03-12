@@ -10,6 +10,7 @@ namespace Application.Secret.MapperProfile
         {
             CreateMap<SecretDto, Domain.Entities.Secret>();
             CreateMap<Domain.Entities.Secret, SecretDto>();
+            CreateMap<SecretDto, CreateSecretCommand>();
             CreateMap<CreateSecretCommand, Domain.Entities.Secret>();
         }
     }
