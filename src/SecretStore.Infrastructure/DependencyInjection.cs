@@ -1,7 +1,9 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Authorization.Interfaces;
+using Application.Common.Interfaces;
 using Infrastructure.Data.CosmosDb.Bootstrap;
 using Infrastructure.Data.CosmosDb.Configuration;
 using Infrastructure.Data.CosmosDb.Repository;
+using Infrastructure.Services;
 using Infrastructure.Services.Logger;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +24,9 @@ namespace Infrastructure
             
             //Repository
             services.AddScoped<ISecretRepository, SecretRepository>();
+            
+            //UserCOntext Service
+            services.AddTransient<IUserContext, UserContext>();
 
             return services;
         }
