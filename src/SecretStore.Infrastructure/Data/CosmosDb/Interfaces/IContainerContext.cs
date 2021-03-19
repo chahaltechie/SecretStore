@@ -8,5 +8,7 @@ namespace Infrastructure.Data.CosmosDb.Interfaces
         string ContainerName { get; }
         string GenerateId(T entity);    
         PartitionKey ResolvePartitionKey();
+        string ResolveStringPartitionKey();
+        string ResolveUniqueKey(T entity);
     }
 }

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Token.Models;
+using AutoMapper;
 
 namespace Application.Token.MapperProfile
 {
@@ -6,7 +7,7 @@ namespace Application.Token.MapperProfile
     {
         public TokenMapperProfile()
         {
-            
+            CreateMap<Domain.Models.Token, UserTokenResponseDto>();
         }
     }
 }

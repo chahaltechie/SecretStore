@@ -34,7 +34,7 @@ namespace Infrastructure.Data.CosmosDb.Repository
         {
             try
             {
-                ItemResponse<T> response = await _container.ReadItemAsync<T>(id, ResolvePartitionKey());
+                ItemResponse<T> response = await _container.ReadItemAsync<T>(id,ResolvePartitionKey());
                 return response.Resource;
             }
             catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -45,7 +45,7 @@ namespace Infrastructure.Data.CosmosDb.Repository
 
         public async Task AddItemAsync(T item)
         {
-            item.PartitionKey = ResolvePartitionKey().ToString();
+            item.PartitionKey = ResolveStringPartitionKey();
             item.Id = GenerateId(item);
             await _container.CreateItemAsync<T>(item);
         }
@@ -63,5 +63,7 @@ namespace Infrastructure.Data.CosmosDb.Repository
         public abstract string ContainerName { get; }
         public abstract string GenerateId(T entity);
         public abstract PartitionKey ResolvePartitionKey();
+        public abstract string ResolveStringPartitionKey();
+        public abstract string ResolveUniqueKey(T entity);
     }
 }

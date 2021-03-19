@@ -8,16 +8,18 @@ using SecretStore.API.Models.Token;
 
 namespace SecretStore.API.Controllers
 {
-    public class Token : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class TokenController : ControllerBase
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
-        public Token(IMediator mediator, IMapper mapper)
+        public TokenController(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
             _mapper = mapper;
-        }
+        }   
 
         // GET
         [HttpPost("/Login")]

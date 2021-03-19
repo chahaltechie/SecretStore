@@ -1,6 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Application.Authorization.Interfaces;
-using Domain.Common;
 
 namespace Application.Token.Interfaces
 {

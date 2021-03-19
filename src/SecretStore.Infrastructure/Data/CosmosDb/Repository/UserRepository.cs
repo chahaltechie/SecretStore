@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
 using Infrastructure.Data.CosmosDb.Interfaces;
@@ -19,6 +20,8 @@ namespace Infrastructure.Data.CosmosDb.Repository
 
 
         public override PartitionKey ResolvePartitionKey() => new PartitionKey("user");
+        public override string ResolveStringPartitionKey() => "user";
+        public override string ResolveUniqueKey(User entity) => $"{entity.Name}_{entity.Email}";
 
         public async Task<User> GetUserByEmailAsync(string email)
         {
@@ -31,11 +34,11 @@ namespace Infrastructure.Data.CosmosDb.Repository
 
         public async Task<User> GetUserByNameAsync(string name)
         {
-            string query = @$"SELECT * FROM c where c.Name = '${name}'";
+            string query = @$"SELECT * FROM c where c.Name = '{name}' and c.pk = '{ResolveStringPartitionKey()}'";
 
-            var results = await this.GetItemAsync(query);
+            var results = await this.GetItemsAsync(query);
 
-            return results;
+            return results?.FirstOrDefault();
         }
     }
 }

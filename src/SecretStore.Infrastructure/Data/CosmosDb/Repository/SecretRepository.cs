@@ -13,6 +13,8 @@ namespace Infrastructure.Data.CosmosDb.Repository
         public override string ContainerName { get; } = "Secret";
         public override string GenerateId(Secret entity) => Guid.NewGuid().ToString();
         public override PartitionKey ResolvePartitionKey() => new PartitionKey("secret");
+        public override string ResolveStringPartitionKey() => "secret";
+        public override string ResolveUniqueKey(Secret entity) => $"{entity.Title}";
 
         public SecretRepository(ICosmosDbContainerFactory containerFactory) : base(containerFactory)
         {
