@@ -11,6 +11,7 @@ namespace Domain.Common
 
         [JsonProperty(PropertyName = "pk")] public string PartitionKey { get; set; }
         [JsonProperty(PropertyName = "un")] public string UniqueKey { get; set; }
+        public string Type { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         public DateTime? ModifiedOn { get; set; } = DateTime.UtcNow;
         public string CreatedBy { get; set; }

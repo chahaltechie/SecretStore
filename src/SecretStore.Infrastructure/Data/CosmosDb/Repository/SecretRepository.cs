@@ -15,6 +15,7 @@ namespace Infrastructure.Data.CosmosDb.Repository
         public override PartitionKey ResolvePartitionKey() => new PartitionKey("secret");
         public override string ResolveStringPartitionKey() => "secret";
         public override string ResolveUniqueKey(Secret entity) => $"{entity.Title}";
+        public override string ResolveDocumentType() => "secret";
 
         public SecretRepository(ICosmosDbContainerFactory containerFactory) : base(containerFactory)
         {

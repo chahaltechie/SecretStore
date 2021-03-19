@@ -22,6 +22,7 @@ namespace Infrastructure.Data.CosmosDb.Repository
         public override PartitionKey ResolvePartitionKey() => new PartitionKey("user");
         public override string ResolveStringPartitionKey() => "user";
         public override string ResolveUniqueKey(User entity) => $"{entity.Name}_{entity.Email}";
+        public override string ResolveDocumentType() => "user";
 
         public async Task<User> GetUserByEmailAsync(string email)
         {

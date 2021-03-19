@@ -10,5 +10,6 @@ namespace Infrastructure.Data.CosmosDb.Interfaces
         PartitionKey ResolvePartitionKey();
         string ResolveStringPartitionKey();
         string ResolveUniqueKey(T entity);
+        string ResolveDocumentType();
     }
 }

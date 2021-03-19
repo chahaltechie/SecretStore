@@ -47,6 +47,8 @@ namespace Infrastructure.Data.CosmosDb.Repository
         {
             item.PartitionKey = ResolveStringPartitionKey();
             item.Id = GenerateId(item);
+            item.UniqueKey = ResolveUniqueKey(item);
+            item.Type = ResolveDocumentType();
             await _container.CreateItemAsync<T>(item);
         }
 
@@ -65,5 +67,6 @@ namespace Infrastructure.Data.CosmosDb.Repository
         public abstract PartitionKey ResolvePartitionKey();
         public abstract string ResolveStringPartitionKey();
         public abstract string ResolveUniqueKey(T entity);
+        public abstract string ResolveDocumentType();
     }
 }

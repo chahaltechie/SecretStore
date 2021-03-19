@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Authentication;
 using System.Security.Claims;
@@ -27,14 +28,15 @@ namespace Infrastructure.Identity
             if (string.IsNullOrEmpty(userContext.Id))
                 throw new InvalidCredentialException("Invalid username or password");
 
-            var tokenExp = new DateTimeOffset(DateTime.Now).AddDays(1).ToUnixTimeSeconds().ToString();
+            var expires = DateTime.Now.AddMinutes(5);
+            //var tokenExp = EpochTime.GetIntDate(expires).ToString(), ClaimValueTypes.Integer64
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, userContext.Name),
-                new Claim(ClaimTypes.NameIdentifier, userContext.Id),
-                new Claim(JwtRegisteredClaimNames.Exp,
-                    tokenExp),
-                new Claim(ClaimTypes.Role, userContext.Role.Name)
+                new Claim("Issuer", "SecretStoreApp"),
+                new Claim("UserName", userContext.Name),
+                new Claim("Identifier", userContext.Id),
+                new Claim("exp", EpochTime.GetIntDate(expires).ToString(), ClaimValueTypes.Integer64),
+                new Claim("Role", userContext.Role.Name)
             };
 
             var token = new JwtSecurityToken(new JwtHeader(new SigningCredentials(
@@ -45,7 +47,7 @@ namespace Infrastructure.Identity
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
                 RefreshToken = "REFRESH",
                 UserName = userContext.Name,
-                Expiry = tokenExp
+                Expiry = expires.ToString(CultureInfo.InvariantCulture)
             };
         }
     }
