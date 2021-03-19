@@ -1,9 +1,10 @@
-﻿using SecretStore.API.Configurations;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using SecretStore.API.Configurations;
 
-namespace SecretStore.API.Installers
+namespace SecretStore.API.Installers.APIInstallers
 {
     public class AuthenticationInstaller : IInstaller
     {
@@ -16,6 +17,10 @@ namespace SecretStore.API.Installers
                 {
                     options.Audience = aadSettings.ResourceId;
                     options.Authority = $"{aadSettings.Instance}{aadSettings.TenantId}";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        //TBD
+                    };
                 });
             
         }

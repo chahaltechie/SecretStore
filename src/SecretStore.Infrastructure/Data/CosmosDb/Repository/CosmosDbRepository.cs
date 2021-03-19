@@ -45,6 +45,7 @@ namespace Infrastructure.Data.CosmosDb.Repository
 
         public async Task AddItemAsync(T item)
         {
+            item.PartitionKey = ResolvePartitionKey().ToString();
             item.Id = GenerateId(item);
             await _container.CreateItemAsync<T>(item);
         }

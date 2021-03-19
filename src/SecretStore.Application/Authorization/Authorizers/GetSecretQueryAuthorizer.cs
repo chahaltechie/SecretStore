@@ -7,12 +7,12 @@ namespace Application.Authorization.Authorizers
 {
     public class GetSecretQueryAuthorizer : IAuthorizer<GetAllSecretsQuery>
     {
-        private readonly IUserContext _userContext;
-
-        public GetSecretQueryAuthorizer(IUserContext userContext)
-        {
-            _userContext = userContext;
-        }
+        // private readonly IUserContext _userContext;
+        //
+        // public GetSecretQueryAuthorizer(IUserContext userContext)
+        // {
+        //     _userContext = userContext;
+        // }
 
         public async Task<AuthorizationResponse> AuthorizeAsync(GetAllSecretsQuery instance)
         {

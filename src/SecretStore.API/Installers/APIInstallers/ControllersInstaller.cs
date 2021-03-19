@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Reflection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
@@ -13,6 +14,7 @@ namespace SecretStore.API.Installers
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SecretStore.API", Version = "v1" });
             });
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
         }
     }
 }   
