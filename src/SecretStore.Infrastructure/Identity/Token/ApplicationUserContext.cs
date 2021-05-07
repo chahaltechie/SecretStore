@@ -1,6 +1,6 @@
 ﻿using Domain.Common;
 
-namespace Infrastructure.Identity
+namespace Infrastructure.Identity.Token
 {
     public class ApplicationUserContext : BaseUserContext
     {

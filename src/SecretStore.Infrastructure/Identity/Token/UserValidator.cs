@@ -1,9 +1,8 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Application.Authorization.Interfaces;
 using Application.Common.Interfaces;
 
-namespace Infrastructure.Identity
+namespace Infrastructure.Identity.Token
 {
     public class UserValidator : IUserValidator<ApplicationUserContext>
     {
