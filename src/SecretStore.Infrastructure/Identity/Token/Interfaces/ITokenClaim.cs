@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Identity.Token.Interfaces
 {
-    public interface ITokenClaim<T> where T : BaseUserContext
+    public interface ITokenClaim<in T> where T : BaseUserContext
     {
         Claim GenerateClaim(T context);
     }
