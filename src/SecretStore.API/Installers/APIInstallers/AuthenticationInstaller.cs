@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -15,11 +16,18 @@ namespace SecretStore.API.Installers.APIInstallers
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.Audience = aadSettings.ResourceId;
-                    options.Authority = $"{aadSettings.Instance}{aadSettings.TenantId}";
+                    // options.Audience = aadSettings.ResourceId;
+                    // options.Authority = $"{aadSettings.Instance}{aadSettings.TenantId}";
+                    options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        //TBD
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey =
+                            new SymmetricSecurityKey(Encoding.ASCII.GetBytes("ThisIsASecretKeyWhichNoOneCanHack")),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        RequireExpirationTime = false,
+                        ValidateLifetime = true
                     };
                 });
             

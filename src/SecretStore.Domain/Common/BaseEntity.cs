@@ -7,7 +7,7 @@ namespace Domain.Common
 {
     public abstract class BaseEntity
     {
-        [JsonProperty(PropertyName = "id")] public string Id { get; set; }
+        [JsonProperty(PropertyName = "id")] public string Id { get;  set; }
 
         [JsonProperty(PropertyName = "pk")] public string PartitionKey { get; set; }
         [JsonProperty(PropertyName = "un")] public string UniqueKey { get; set; }

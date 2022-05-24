@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 using SecretStore.API.Configurations;
@@ -17,6 +18,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 
 namespace SecretStore.API
@@ -35,7 +37,27 @@ namespace SecretStore.API
         {
             services.AddHttpContextAccessor();
             services.InstallServicesInAssembly(Configuration);
-
+            // services
+            //     .AddAuthentication(x =>
+            //     {
+            //         x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //         x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            //         x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //     })
+            //     .AddJwtBearer(x =>
+            //     {
+            //         x.SaveToken = true;
+            //         x.TokenValidationParameters = new TokenValidationParameters
+            //         {
+            //             ValidateIssuerSigningKey = true,
+            //             IssuerSigningKey =
+            //                 new SymmetricSecurityKey(Encoding.ASCII.GetBytes("ThisIsASecretKeyWhichNoOneCanHack")),
+            //             ValidateIssuer = false,
+            //             ValidateAudience = false,
+            //             RequireExpirationTime = false,
+            //             ValidateLifetime = true
+            //         };
+            //     }); 
             services.AddSwaggerGen(swagger =>
             {
                 //This is to generate the Default UI of Swagger Documentation  

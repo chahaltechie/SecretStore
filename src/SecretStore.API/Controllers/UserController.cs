@@ -2,11 +2,13 @@
 using Application.User.Commands;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecretStore.API.Models.User;
 
 namespace SecretStore.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UserController : ControllerBase

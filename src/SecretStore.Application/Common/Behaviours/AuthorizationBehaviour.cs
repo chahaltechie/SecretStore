@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Authorization.Interfaces;
 using Application.Authorization.Models;
+using FluentValidation;
 using MediatR;
 
 namespace Application.Common.Behaviours
@@ -24,8 +25,12 @@ namespace Application.Common.Behaviours
             if (_authorizer.Any())
             {
                 var result = await _authorizer.FirstOrDefault().AuthorizeAsync(request);
+                if (result.IsSuccess) return await next();
+                else
+                {
+                    throw new ValidationException("Invalid user.");
+                }
             }
-
             return await next();
         }
     }

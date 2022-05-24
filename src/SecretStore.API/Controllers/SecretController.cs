@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace SecretStore.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class SecretController : ControllerBase
@@ -33,7 +34,6 @@ namespace SecretStore.API.Controllers
             _mapper = mapper;
         }
         
-        [Authorize]
         [HttpGet]
         public IEnumerable<Secret> Get()
         {
