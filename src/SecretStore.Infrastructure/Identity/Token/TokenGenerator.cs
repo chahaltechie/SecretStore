@@ -4,12 +4,13 @@ using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Authentication;
-using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Authorization.Interfaces;
 using Application.Token.Interfaces;
 using Infrastructure.Identity.Token.Interfaces;
+using Infrastructure.Identity.Token.Model;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Identity.Token
@@ -18,12 +19,14 @@ namespace Infrastructure.Identity.Token
     {
         private readonly IUserValidator<ApplicationUserContext> _userValidator;
         private readonly List<ITokenClaim<ApplicationUserContext>> _tokenClaims;
+        private readonly JwtSecurity _jwtSecurity;
 
         public TokenGenerator(IUserValidator<ApplicationUserContext> userValidator,
-            List<ITokenClaim<ApplicationUserContext>> tokenClaims)
+            List<ITokenClaim<ApplicationUserContext>> tokenClaims, JwtSecurity jwtSecurity)
         {
             _userValidator = userValidator;
             _tokenClaims = tokenClaims;
+            _jwtSecurity = jwtSecurity;
         }
 
         public async Task<Domain.Models.Token> GenerateTokenAsync(string username, string password)
@@ -37,7 +40,7 @@ namespace Infrastructure.Identity.Token
             var claims = _tokenClaims.Select(tokenClaim => tokenClaim.GenerateClaim(userContext)).ToList();
 
             var token = new JwtSecurityToken(new JwtHeader(new SigningCredentials(
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ThisIsASecretKeyWhichNoOneCanHack")),
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSecurity.SecurityKey)),
                 SecurityAlgorithms.HmacSha256)), new JwtPayload(claims));
             return new Domain.Models.Token
             {

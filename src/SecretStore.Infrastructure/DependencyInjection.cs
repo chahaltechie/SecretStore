@@ -12,6 +12,7 @@ using Infrastructure.Data.CosmosDb.Repository;
 using Infrastructure.Identity;
 using Infrastructure.Identity.Token;
 using Infrastructure.Identity.Token.Interfaces;
+using Infrastructure.Identity.Token.Model;
 using Infrastructure.Services;
 using Infrastructure.Services.Logger;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,10 @@ namespace Infrastructure
             services.AddCosmosDb(settings.EndPointUrl, settings.PrimaryKey, settings.DatabaseName, settings.Containers);
             services.AddScoped<ISecretRepository, SecretRepository>();
 
+            //Jwt Security
+            JwtSecurity jwtSecurity = new();
+            configuration.Bind(nameof(JwtSecurity), jwtSecurity);
+            services.AddSingleton(jwtSecurity);
             //logger
             services.AddLogger(configuration);
 
