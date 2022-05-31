@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.Authorization.Interfaces;
 using Application.Token.Interfaces;
+using Domain.Common;
 using Infrastructure.Identity.Token.Interfaces;
 using Infrastructure.Identity.Token.Model;
 using Microsoft.Extensions.Configuration;
@@ -20,13 +21,15 @@ namespace Infrastructure.Identity.Token
         private readonly IUserValidator<ApplicationUserContext> _userValidator;
         private readonly List<ITokenClaim<ApplicationUserContext>> _tokenClaims;
         private readonly JwtSecurity _jwtSecurity;
+        private readonly BaseApplicationContext _applicationContext;
 
         public TokenGenerator(IUserValidator<ApplicationUserContext> userValidator,
-            List<ITokenClaim<ApplicationUserContext>> tokenClaims, JwtSecurity jwtSecurity)
+            List<ITokenClaim<ApplicationUserContext>> tokenClaims, JwtSecurity jwtSecurity, BaseApplicationContext applicationContext)
         {
             _userValidator = userValidator;
             _tokenClaims = tokenClaims;
             _jwtSecurity = jwtSecurity;
+            _applicationContext = applicationContext;
         }
 
         public async Task<Domain.Models.Token> GenerateTokenAsync(string username, string password)
@@ -35,6 +38,7 @@ namespace Infrastructure.Identity.Token
             if (string.IsNullOrEmpty(userContext.Id))
                 throw new InvalidCredentialException("Invalid username or password");
 
+            _applicationContext.SetUserContext(userContext);
             var expires = DateTime.Now.AddMinutes(5);
 
             var claims = _tokenClaims.Select(tokenClaim => tokenClaim.GenerateClaim(userContext)).ToList();

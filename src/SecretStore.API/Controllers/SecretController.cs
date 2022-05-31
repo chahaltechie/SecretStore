@@ -13,6 +13,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SecretStore.API.ActionFilters;
 
 namespace SecretStore.API.Controllers
 {
@@ -41,6 +42,7 @@ namespace SecretStore.API.Controllers
         }
         
         [HttpGet("/AllSecrets")]
+        [CustomAuthorize("Read")]
         public async Task<IActionResult> GetAllSecrets()
         {
             var query = new GetAllSecretsQuery();
@@ -50,6 +52,7 @@ namespace SecretStore.API.Controllers
         
         
         [HttpPost]
+        [CustomAuthorize("Write")]
         public async Task<IActionResult> Post([FromBody] SecretDto secret)  
         {
             _loggerAdapter.LogInformation("secret method call started");

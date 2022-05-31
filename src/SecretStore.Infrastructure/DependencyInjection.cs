@@ -43,6 +43,8 @@ namespace Infrastructure
 
             services.AddScoped<ITokenGenerator, TokenGenerator>();
             services.AddTransient<IUserValidator<ApplicationUserContext>, UserValidator>();
+            
+            services.AddScoped<BaseApplicationContext,ApplicationContext>();
 
             var claims = Assembly.GetExecutingAssembly().ExportedTypes.Where(x =>
                 typeof(ITokenClaim<ApplicationUserContext>).IsAssignableFrom(x) && !x.IsAbstract && !x.IsInterface)
