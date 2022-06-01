@@ -23,7 +23,8 @@ namespace Infrastructure.Identity.Token
             {
                 Id = user.Id,
                 Name = user.Name,
-                Role = user.Role
+                Role = user.Role,
+                Permission = user.Permission
             };
         }
     }

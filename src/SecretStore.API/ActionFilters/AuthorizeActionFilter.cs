@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Linq;
+using System.Security.Claims;
 using Domain.Common;
 using Infrastructure.Identity.Token;
 using Microsoft.AspNetCore.Mvc;
@@ -9,11 +10,9 @@ namespace SecretStore.API.ActionFilters
     public class AuthorizeActionFilter : IAuthorizationFilter
     {
         private readonly string _permission;
-        private readonly BaseApplicationContext _applicationContext;
-        public AuthorizeActionFilter(string permission, BaseApplicationContext applicationContext)
+        public AuthorizeActionFilter(string permission)
         {
             _permission = permission;
-            _applicationContext = applicationContext;
         }
         public void OnAuthorization(AuthorizationFilterContext context)
         {
@@ -26,12 +25,13 @@ namespace SecretStore.API.ActionFilters
         
         private bool CheckUserPermission(ClaimsPrincipal user, string permission)
         {
-            var userContext = _applicationContext.UserContext;
+            var authorization = user.Claims.FirstOrDefault(x => x.Type == "Permission")?.Value;
+            if (authorization == null) return false;
             // Logic for checking the user permission goes here. 
             
             // Let's assume this user has only read permission.
-            return permission == "Read";            
-        }
+            return permission == authorization;            
+        }   
         
     }
     

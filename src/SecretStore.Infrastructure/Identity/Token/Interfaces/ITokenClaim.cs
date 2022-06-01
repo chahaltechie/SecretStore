@@ -48,5 +48,12 @@ namespace Infrastructure.Identity.Token.Interfaces
             return new Claim("Role", context.Role.Name);
         }
     }
+    public class PermissionClaim : ITokenClaim<ApplicationUserContext>
+    {
+        public Claim GenerateClaim(ApplicationUserContext context)
+        {   
+            return new Claim("Permission", context.Permission);
+        }
+    }
     
 }

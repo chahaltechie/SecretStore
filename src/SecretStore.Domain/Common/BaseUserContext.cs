@@ -7,15 +7,7 @@ namespace Domain.Common
         public string Id { get; set; }
         public string Name { get; set; }
         public Role Role { get; set; }
-    }
-
-    public class BaseApplicationContext
-    {
-        public BaseUserContext UserContext { get; private set; }
-
-        public void SetUserContext(BaseUserContext userContext)
-        {
-            this.UserContext = userContext;
-        }
+        
+        public string Permission { get; set; }
     }
 }
