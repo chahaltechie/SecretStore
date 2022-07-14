@@ -4,11 +4,11 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SecretStore.API.ActionFilters;
 using SecretStore.API.Models.User;
 
 namespace SecretStore.API.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UserController : ControllerBase
@@ -22,6 +22,7 @@ namespace SecretStore.API.Controllers
             _mediator = mediator;
         }
         [HttpPost]
+        [CustomAuthorize("WRITE")]
         public async Task<IActionResult> Post([FromBody] CreateUserRequest createUserRequest)
         {
             var result = await _mediator.Send(_mapper.Map<CreateUserCommand>(createUserRequest));

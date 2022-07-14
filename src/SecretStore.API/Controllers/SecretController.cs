@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 using Application.Common.Interfaces;
 using Application.Secret.Commands.CreateSecret;
 using Application.Secret.Models;

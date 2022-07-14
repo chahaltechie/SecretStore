@@ -20,7 +20,7 @@ COPY ["src/SecretStore.Infrastructure/SecretStore.Infrastructure.csproj", "Secre
 RUN dotnet restore "SecretStore.API/SecretStore.API.csproj"
 COPY . .
 WORKDIR "/src/SecretStore.API"
-RUN dotnet build "SecretStore.API.csproj" -c Release -o /app/build
+RUN dotnet build "SecretStore.API.csproj" -c Release -o /app/build  
 
 FROM build AS publish
 RUN dotnet publish "SecretStore.API.csproj" -c Release -o /app/publish

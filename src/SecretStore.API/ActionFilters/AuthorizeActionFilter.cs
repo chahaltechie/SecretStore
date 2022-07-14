@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections;
+using System.Linq;
 using System.Security.Claims;
 using Domain.Common;
 using Infrastructure.Identity.Token;
@@ -30,7 +32,7 @@ namespace SecretStore.API.ActionFilters
             // Logic for checking the user permission goes here. 
             
             // Let's assume this user has only read permission.
-            return permission == authorization;            
+            return string.Equals(permission,authorization,StringComparison.InvariantCultureIgnoreCase);
         }   
         
     }
